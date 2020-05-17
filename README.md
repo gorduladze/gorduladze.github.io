@@ -1,1 +1,1 @@
-# gorduladze.github.io
+# http://gorduladze.github.io
