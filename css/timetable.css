@@ -12,6 +12,7 @@ body {
 
 h1 {
   font-size: 1.6em;
+  line-height: 1.25;
   margin: 0 0 24px;
 }
 
@@ -30,14 +31,11 @@ a:focus {
   line-height: 1.8;
 }
 
-/* Timetable layout (based on Timetable.js styles) */
+/* Timetable: shared */
 
 .timetable {
-  --row-height: 46px;
-  --hours: 6; /* set from the schedule in js/timetable.js */
-  --min-hour-width: 120px;
-  display: flex;
-  align-items: flex-start;
+  --accent: #ec6a5e;
+  --accent-dark: #e32c1b;
   width: 100%;
   box-sizing: border-box;
 }
@@ -52,23 +50,33 @@ a:focus {
   padding: 0;
 }
 
+/* Grid view (tablets and desktops), based on Timetable.js styles */
+
+.tt-grid {
+  --row-height: 46px;
+  --hours: 6; /* set from the schedule in js/timetable.js */
+  --min-hour-width: 120px;
+  display: flex;
+  align-items: flex-start;
+}
+
 /* Day names */
 
-.timetable > aside {
+.tt-grid > aside {
   flex: none;
   max-width: 30%;
   margin-top: var(--row-height); /* aligns with rows below the time header */
   border-right: 5px solid transparent;
 }
 
-.timetable > aside li {
+.tt-grid > aside li {
   height: var(--row-height);
   line-height: var(--row-height);
   padding: 0 15px;
   background-color: #efefef;
 }
 
-.timetable > aside li:not(:last-of-type) {
+.tt-grid > aside li:not(:last-of-type) {
   border-bottom: 1px solid #fff;
 }
 
@@ -82,14 +90,14 @@ a:focus {
 
 /* Scrollable time area: header and rows scroll together */
 
-.timetable > section {
+.tt-grid > section {
   flex: 1 1 auto;
   min-width: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-.timetable > section > .grid {
+.tt-grid > section > .grid {
   min-width: calc(var(--hours) * var(--min-hour-width));
 }
 
@@ -177,8 +185,8 @@ a:focus {
   padding: 0 10px;
   overflow: hidden;
   color: #fff;
-  background-color: #ec6a5e;
-  border: 1px solid #e32c1b;
+  background-color: var(--accent);
+  border: 1px solid var(--accent-dark);
   transition: background-color 0.2s;
   line-height: 1.2;
 }
@@ -198,15 +206,112 @@ a:focus {
 
 .timetable .time-entry .hours {
   font-size: 0.75em;
+  white-space: nowrap;
   opacity: 0.9;
 }
 
-@media (max-width: 600px) {
+/* List view (phones): one card per day */
+
+.tt-list {
+  display: none;
+}
+
+.day-card {
+  margin: 0 0 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fdfdfd;
+}
+
+.day-card.is-today {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.day-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 10px 14px;
+  font-size: 1em;
+  font-weight: 600;
+  background: #efefef;
+}
+
+.is-today .day-name {
+  color: #fff;
+  background: var(--accent);
+}
+
+.today-badge {
+  font-size: 0.8em;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.lesson-list li:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+.timetable .lesson {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 48px; /* comfortable touch target */
+  padding: 10px 14px;
+  color: inherit;
+}
+
+.timetable .lesson:hover,
+.timetable .lesson:focus {
+  text-decoration: none;
+  background: #f4f4f4;
+}
+
+.lesson-time {
+  flex: none;
+  min-width: 7.5em;
+  font-size: 0.9em;
+  color: #777;
+  font-variant-numeric: tabular-nums;
+}
+
+.lesson-name {
+  font-weight: 500;
+  color: var(--accent-dark);
+}
+
+.no-lessons {
+  margin: 0;
+  padding: 12px 14px;
+  color: #777;
+}
+
+@media (max-width: 900px) {
   body {
-    font-size: 14px;
+    padding: 12px;
+    font-size: 16px;
   }
 
-  .timetable > aside li {
-    padding: 0 8px;
+  h1 {
+    font-size: 1.35em;
+    margin-bottom: 16px;
+  }
+
+  .tt-grid {
+    display: none;
+  }
+
+  .tt-list {
+    display: block;
+  }
+
+  .links a {
+    display: inline-block;
+    padding: 6px 0; /* larger touch target */
   }
 }
