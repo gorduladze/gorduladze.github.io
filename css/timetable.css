@@ -1,0 +1,212 @@
+/* Page */
+
+body {
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 16px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  color: #333;
+  background: #fff;
+}
+
+h1 {
+  font-size: 1.6em;
+  margin: 0 0 24px;
+}
+
+a {
+  color: #c4291a;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  text-decoration: underline;
+}
+
+.links {
+  margin-top: 24px;
+  line-height: 1.8;
+}
+
+/* Timetable layout (based on Timetable.js styles) */
+
+.timetable {
+  --row-height: 46px;
+  --hours: 6; /* set from the schedule in js/timetable.js */
+  --min-hour-width: 120px;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.timetable * {
+  box-sizing: inherit;
+}
+
+.timetable ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Day names */
+
+.timetable > aside {
+  flex: none;
+  max-width: 30%;
+  margin-top: var(--row-height); /* aligns with rows below the time header */
+  border-right: 5px solid transparent;
+}
+
+.timetable > aside li {
+  height: var(--row-height);
+  line-height: var(--row-height);
+  padding: 0 15px;
+  background-color: #efefef;
+}
+
+.timetable > aside li:not(:last-of-type) {
+  border-bottom: 1px solid #fff;
+}
+
+.timetable .row-heading {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+/* Scrollable time area: header and rows scroll together */
+
+.timetable > section {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.timetable > section > .grid {
+  min-width: calc(var(--hours) * var(--min-hour-width));
+}
+
+/* Time header */
+
+.timetable header ul {
+  display: flex;
+  height: var(--row-height);
+  align-items: center;
+}
+
+.timetable header li {
+  flex: 1 1 0;
+  position: relative;
+}
+
+.timetable header li:last-of-type {
+  flex: 0 0 0;
+}
+
+.timetable .time-label {
+  position: absolute;
+  left: 0;
+  transform: translate(-50%, -50%);
+  font-size: 0.8em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.timetable header li:first-of-type .time-label {
+  transform: translate(0, -50%);
+}
+
+.timetable header li:last-of-type .time-label {
+  transform: translate(-100%, -50%);
+}
+
+/* Day rows */
+
+.timetable .room-timeline {
+  border-top: 1px solid #e5e5e5;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.timetable .room-timeline li {
+  position: relative;
+  height: var(--row-height);
+  background-color: #f4f4f4;
+}
+
+.timetable .room-timeline li:nth-of-type(odd) {
+  background-color: #fdfdfd;
+}
+
+/* Grid lines: thin every 15 minutes, stronger every 30 minutes */
+.timetable .room-timeline li::before,
+.timetable .room-timeline li::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.timetable .room-timeline li::before {
+  background-image: linear-gradient(90deg, #e5e5e5 1px, transparent 0);
+  background-size: calc(100% / var(--hours) / 4) auto;
+}
+
+.timetable .room-timeline li::after {
+  background-image: linear-gradient(90deg, #d5d5d5 2px, transparent 0);
+  background-size: calc(100% / var(--hours) / 2) auto;
+  background-position: -1px 0;
+}
+
+/* Lessons */
+
+.timetable .time-entry {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 10px;
+  overflow: hidden;
+  color: #fff;
+  background-color: #ec6a5e;
+  border: 1px solid #e32c1b;
+  transition: background-color 0.2s;
+  line-height: 1.2;
+}
+
+.timetable .time-entry:hover,
+.timetable .time-entry:focus {
+  background-color: #e74030;
+  text-decoration: none;
+}
+
+.timetable .time-entry .name {
+  font-size: 0.85em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.timetable .time-entry .hours {
+  font-size: 0.75em;
+  opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+
+  .timetable > aside li {
+    padding: 0 8px;
+  }
+}
