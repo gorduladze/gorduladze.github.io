@@ -7,7 +7,9 @@ https://gorduladze.github.io.
 
 - `index.html` – page shell
 - `js/schedule.js` – the timetable data (days, subjects, lessons)
-- `js/timetable.js` – renders the schedule into the page
+- `js/timetable.js` – renders the schedule into the page: a time grid on
+  screens wider than 900px, and a list of day cards (with today highlighted)
+  on phones and small tablets
 - `css/timetable.css` – page and timetable styles (based on [Timetable.js](https://github.com/Grible/timetable.js))
 
 ## Updating the timetable
